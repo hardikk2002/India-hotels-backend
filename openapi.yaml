@@ -1,0 +1,284 @@
+openapi: 3.0.0
+info:
+  description: This is IndianHotels API documentation using [Swagger](http://swagger.io).
+  version: 1.0.0
+  title: Indian Hotels
+  contact:
+    email: hardikk2002@gmail.com
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+tags:
+  - name: User
+    description: Everything about your users
+  - name: Hotel
+    description: Everything about posts
+  - name: Rooms
+    description: Everything about rooms
+paths:
+  /auth/login:
+    post:
+      tags:
+        - User
+      summary: Create login
+      description: Will generate token save it as Bearer in Authorize
+      operationId: loginuser
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Login"
+        description: Login inputs
+        required: true
+      responses:
+        default:
+          description: Successful operation
+  /user/register:
+    post:
+      tags:
+        - User
+      summary: Create login
+      description: Will generate token save it as Bearer in Authorize
+      operationId: createuser
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateUser"
+        description: Create new user record
+        required: true
+      responses:
+        default:
+          description: Successful operation
+  /user:
+    get:
+      security:
+        - Bearer: []
+      tags:
+        - User
+      summary: Get user details
+      description: Accessible by users having bearer token
+      operationId: getuser
+      responses:
+        default:
+          description: Successful operation
+  /hotel:
+    get:
+      tags:
+        - Hotel
+      summary: Get hotel details
+      description: ""
+      operationId: gethotels
+      responses:
+        default:
+          description: Successful operation
+  /hotel/create:
+    post:
+      tags:
+        - Hotel
+      summary: Create posts
+      description: Accessible by users who are HotelOwner and having bearer token
+      operationId: createposts
+      requestBody:
+        $ref: "#/components/requestBodies/CreatePosts"
+      responses:
+        default:
+          description: Successful operation
+  /hotel/{id}:
+    put:
+      tags:
+        - Hotel
+      summary: Update posts
+      description: "Hotel owner with having bearer token can update"
+      operationId: updatepost
+      parameters:
+        - in: path
+          name: id
+          description: Post ID
+          required: true
+          schema:
+            type: string
+      requestBody:
+        $ref: "#/components/requestBodies/CreatePosts"
+      responses:
+        default:
+          description: Successful operation
+    delete:
+      tags:
+        - Hotel
+      summary: Delete posts
+      description: ""
+      operationId: deletepost
+      parameters:
+        - in: path
+          name: id
+          description: Post ID
+          required: true
+          schema:
+            type: string
+      responses:
+        default:
+          description: Successful operation
+  /hotel/upvote/{id}:
+    patch:
+      security:
+        - Bearer: []
+      tags:
+        - Hotel
+      summary: Update posts
+      description: Users bearer token can upvote
+      operationId: upvoteposts
+      parameters:
+        - in: path
+          name: id
+          description: Post ID
+          required: true
+          schema:
+            type: string
+      responses:
+        default:
+          description: Successful operation
+  /hotel/{id}/rooms:
+    get:
+      security:
+        - Bearer: []
+      tags:
+        - Rooms
+      summary: Get rooms in a hotel
+      description: Accessible ifuser is having bearer token
+      operationId: Get Rooms
+      parameters:
+        - in: path
+          name: id
+          description: Post ID
+          required: true
+          schema:
+            type: string
+      responses:
+        default:
+          description: Successful operation
+  /hotel/{id}/rooms/{status}:
+    put:
+      security:
+        - Bearer: []
+      tags:
+        - Rooms
+      summary: Update room status
+      description: Accessible ifuser is having bearer token
+      operationId: updateroom
+      parameters:
+        - in: path
+          name: id
+          description: Post ID
+          required: true
+          schema:
+            type: string
+        - in: path
+          name: status
+          description: Booking status
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UpdateRoomStatus"
+        description: Update room status
+        required: true
+      responses:
+        default:
+          description: Successful operation
+externalDocs:
+  description: Find out more about Swagger
+  url: http://swagger.io
+servers:
+  - url: https://india-hotels-backend.herokuapp.com/v1
+  - url: http://localhost:8080/v1
+components:
+  requestBodies:
+    CreatePosts:
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/CreatePosts"
+      description: Create new user record
+      required: true
+  securitySchemes:
+    Bearer:
+      type: apiKey
+      name: Authorization
+      in: header
+  schemas:
+    Login:
+      type: object
+      properties:
+        email:
+          type: string
+        password:
+          type: string
+      example:
+        email: example@gmail.com
+        password: example@123
+          
+      xml:
+        name: User
+    CreateUser:
+      type: object
+      properties:
+        email:
+          type: string
+        name:
+          type: string
+        accountType:
+          type: string
+        phoneNumber:
+          type: integer
+        password:
+          type: string
+        registrationType:
+          type: string
+      example:
+        email: example@gmail.com
+        name: example
+        accountType: hotelowner
+        phoneNumber: 909000990
+        password: example@123
+        registrationType: email
+      xml:
+        name: User
+    CreatePosts:
+      type: object
+      properties:
+        title:
+          type: string
+        postbio:
+          type: string
+        facilities:
+          type: array
+          items:
+            type: string
+        restaurantNumber:
+          type: integer
+      example:
+        title: Example Name
+        postbio: Example is worlds fav...
+        facilities: ["Free Wifi", "Food facilities", "Air Conditioning"]
+        restaurantNumber: 88989909
+      xml:
+        name: User
+    UpdateRoomStatus:
+      type: object
+      properties:
+        roomNumber:
+          type: integer
+        allottedUser:
+          type: string
+      example:
+          roomNumber: 5,
+          allottedUser: usermail@gmail.com
+      xml:
+        name: User
+        
+        
+        

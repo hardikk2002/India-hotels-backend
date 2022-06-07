@@ -33,7 +33,7 @@
           "User"
         ],
         "summary": "Create login",
-        "description": "",
+        "description": "Will generate token save it as Bearer in Authorize",
         "operationId": "loginuser",
         "requestBody": {
           "content": {
@@ -48,7 +48,7 @@
         },
         "responses": {
           "default": {
-            "description": "Successfil operation"
+            "description": "Successful operation"
           }
         }
       }
@@ -59,7 +59,7 @@
           "User"
         ],
         "summary": "Create login",
-        "description": "",
+        "description": "Will generate token save it as Bearer in Authorize",
         "operationId": "createuser",
         "requestBody": {
           "content": {
@@ -74,7 +74,7 @@
         },
         "responses": {
           "default": {
-            "description": "Successfil operation"
+            "description": "Successful operation"
           }
         }
       }
@@ -90,11 +90,11 @@
           "User"
         ],
         "summary": "Get user details",
-        "description": "Accessible by users having access toke",
+        "description": "Accessible by users having bearer token",
         "operationId": "getuser",
         "responses": {
           "default": {
-            "description": "Successfil operation"
+            "description": "Successful operation"
           }
         }
       }
@@ -109,7 +109,7 @@
         "operationId": "gethotels",
         "responses": {
           "default": {
-            "description": "Successfil operation"
+            "description": "Successful operation"
           }
         }
       }
@@ -120,14 +120,14 @@
           "Hotel"
         ],
         "summary": "Create posts",
-        "description": "",
+        "description": "Accessible by users who are HotelOwner and having bearer token",
         "operationId": "createposts",
         "requestBody": {
           "$ref": "#/components/requestBodies/CreatePosts"
         },
         "responses": {
           "default": {
-            "description": "Successfil operation"
+            "description": "Successful operation"
           }
         }
       }
@@ -138,7 +138,7 @@
           "Hotel"
         ],
         "summary": "Update posts",
-        "description": "",
+        "description": "Hotel owner with having bearer token can update",
         "operationId": "updatepost",
         "parameters": [
           {
@@ -196,7 +196,7 @@
           "Hotel"
         ],
         "summary": "Update posts",
-        "description": "",
+        "description": "Users bearer token can upvote",
         "operationId": "upvoteposts",
         "parameters": [
           {
@@ -227,7 +227,7 @@
           "Rooms"
         ],
         "summary": "Get rooms in a hotel",
-        "description": "",
+        "description": "Accessible ifuser is having bearer token",
         "operationId": "Get Rooms",
         "parameters": [
           {
@@ -258,7 +258,7 @@
           "Rooms"
         ],
         "summary": "Update room status",
-        "description": "",
+        "description": "Accessible ifuser is having bearer token",
         "operationId": "updateroom",
         "parameters": [
           {
@@ -343,6 +343,10 @@
             "type": "string"
           }
         },
+        "example": {
+          "email": "example@gmail.com",
+          "password": "example@123"
+        },
         "xml": {
           "name": "User"
         }
@@ -356,7 +360,7 @@
           "name": {
             "type": "string"
           },
-          "registrationType": {
+          "accountType": {
             "type": "string"
           },
           "phoneNumber": {
@@ -364,7 +368,18 @@
           },
           "password": {
             "type": "string"
+          },
+          "registrationType": {
+            "type": "string"
           }
+        },
+        "example": {
+          "email": "example@gmail.com",
+          "name": "example",
+          "accountType": "hotelowner",
+          "phoneNumber": 909000990,
+          "password": "example@123",
+          "registrationType": "email"
         },
         "xml": {
           "name": "User"
@@ -379,9 +394,25 @@
           "postbio": {
             "type": "string"
           },
+          "facilities": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
           "restaurantNumber": {
             "type": "integer"
           }
+        },
+        "example": {
+          "title": "Example Name",
+          "postbio": "Example is worlds fav...",
+          "facilities": [
+            "Free Wifi",
+            "Food facilities",
+            "Air Conditioning"
+          ],
+          "restaurantNumber": 88989909
         },
         "xml": {
           "name": "User"
@@ -390,29 +421,16 @@
       "UpdateRoomStatus": {
         "type": "object",
         "properties": {
-          "availableRoomCount": {
-            "type": "integer"
-          },
-          "roomDetail": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/RoomDetails"
-            }
-          }
-        },
-        "xml": {
-          "name": "User"
-        }
-      },
-      "RoomDetails": {
-        "type": "object",
-        "properties": {
           "roomNumber": {
             "type": "integer"
           },
           "allottedUser": {
             "type": "string"
           }
+        },
+        "example": {
+          "roomNumber": "5,",
+          "allottedUser": "usermail@gmail.com"
         },
         "xml": {
           "name": "User"
