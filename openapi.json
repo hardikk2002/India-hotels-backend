@@ -1,5 +1,5 @@
 {
-  "swagger": "2.0",
+  "openapi": "3.0.0",
   "info": {
     "description": "This is IndianHotels API documentation using [Swagger](http://swagger.io).",
     "version": "1.0.0",
@@ -12,25 +12,19 @@
       "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
     }
   },
-  "host": "localhost:8080",
-  "basePath": "/v1",
   "tags": [
     {
       "name": "User",
       "description": "Everything about your users"
     },
     {
-      "name": "Posts",
+      "name": "Hotel",
       "description": "Everything about posts"
     },
     {
       "name": "Rooms",
       "description": "Everything about rooms"
     }
-  ],
-  "schemes": [
-    "https",
-    "http"
   ],
   "paths": {
     "/auth/login": {
@@ -41,23 +35,17 @@
         "summary": "Create login",
         "description": "",
         "operationId": "loginuser",
-        "consumes": [
-          "application/json"
-        ],
-        "produces": [
-          "application/json"
-        ],
-        "parameters": [
-          {
-            "in": "body",
-            "name": "body",
-            "description": "Login inputs",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/Login"
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Login"
+              }
             }
-          }
-        ],
+          },
+          "description": "Login inputs",
+          "required": true
+        },
         "responses": {
           "default": {
             "description": "Successfil operation"
@@ -73,23 +61,17 @@
         "summary": "Create login",
         "description": "",
         "operationId": "createuser",
-        "consumes": [
-          "application/json"
-        ],
-        "produces": [
-          "application/json"
-        ],
-        "parameters": [
-          {
-            "in": "body",
-            "name": "body",
-            "description": "Create new user record",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/CreateUser"
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateUser"
+              }
             }
-          }
-        ],
+          },
+          "description": "Create new user record",
+          "required": true
+        },
         "responses": {
           "default": {
             "description": "Successfil operation"
@@ -110,9 +92,6 @@
         "summary": "Get user details",
         "description": "Accessible by users having access toke",
         "operationId": "getuser",
-        "produces": [
-          "application/json"
-        ],
         "responses": {
           "default": {
             "description": "Successfil operation"
@@ -123,14 +102,11 @@
     "/hotel": {
       "get": {
         "tags": [
-          "Posts"
+          "Hotel"
         ],
         "summary": "Get hotel details",
         "description": "",
         "operationId": "gethotels",
-        "produces": [
-          "application/json"
-        ],
         "responses": {
           "default": {
             "description": "Successfil operation"
@@ -141,28 +117,14 @@
     "/hotel/create": {
       "post": {
         "tags": [
-          "Posts"
+          "Hotel"
         ],
         "summary": "Create posts",
         "description": "",
         "operationId": "createposts",
-        "consumes": [
-          "application/json"
-        ],
-        "produces": [
-          "application/json"
-        ],
-        "parameters": [
-          {
-            "in": "body",
-            "name": "body",
-            "description": "Create new user record",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/CreatePosts"
-            }
-          }
-        ],
+        "requestBody": {
+          "$ref": "#/components/requestBodies/CreatePosts"
+        },
         "responses": {
           "default": {
             "description": "Successfil operation"
@@ -173,35 +135,25 @@
     "/hotel/{id}": {
       "put": {
         "tags": [
-          "Posts"
+          "Hotel"
         ],
         "summary": "Update posts",
         "description": "",
         "operationId": "updatepost",
-        "consumes": [
-          "application/json"
-        ],
-        "produces": [
-          "application/json"
-        ],
         "parameters": [
           {
             "in": "path",
             "name": "id",
             "description": "Post ID",
             "required": true,
-            "type": "string"
-          },
-          {
-            "in": "body",
-            "name": "body",
-            "description": "Create new user record",
-            "required": true,
             "schema": {
-              "$ref": "#/definitions/CreatePosts"
+              "type": "string"
             }
           }
         ],
+        "requestBody": {
+          "$ref": "#/components/requestBodies/CreatePosts"
+        },
         "responses": {
           "default": {
             "description": "Successful operation"
@@ -210,21 +162,20 @@
       },
       "delete": {
         "tags": [
-          "Posts"
+          "Hotel"
         ],
         "summary": "Delete posts",
         "description": "",
         "operationId": "deletepost",
-        "produces": [
-          "application/json"
-        ],
         "parameters": [
           {
             "in": "path",
             "name": "id",
             "description": "Post ID",
             "required": true,
-            "type": "string"
+            "schema": {
+              "type": "string"
+            }
           }
         ],
         "responses": {
@@ -242,21 +193,20 @@
           }
         ],
         "tags": [
-          "Posts"
+          "Hotel"
         ],
         "summary": "Update posts",
         "description": "",
         "operationId": "upvoteposts",
-        "produces": [
-          "application/json"
-        ],
         "parameters": [
           {
             "in": "path",
             "name": "id",
             "description": "Post ID",
             "required": true,
-            "type": "string"
+            "schema": {
+              "type": "string"
+            }
           }
         ],
         "responses": {
@@ -279,16 +229,15 @@
         "summary": "Get rooms in a hotel",
         "description": "",
         "operationId": "Get Rooms",
-        "produces": [
-          "application/json"
-        ],
         "parameters": [
           {
             "in": "path",
             "name": "id",
             "description": "Post ID",
             "required": true,
-            "type": "string"
+            "schema": {
+              "type": "string"
+            }
           }
         ],
         "responses": {
@@ -311,37 +260,37 @@
         "summary": "Update room status",
         "description": "",
         "operationId": "updateroom",
-        "consumes": [
-          "application/json"
-        ],
-        "produces": [
-          "application/json"
-        ],
         "parameters": [
           {
             "in": "path",
             "name": "id",
             "description": "Post ID",
             "required": true,
-            "type": "string"
+            "schema": {
+              "type": "string"
+            }
           },
           {
             "in": "path",
             "name": "status",
             "description": "Booking status",
             "required": true,
-            "type": "string"
-          },
-          {
-            "in": "body",
-            "name": "body",
-            "description": "Update room status",
-            "required": true,
             "schema": {
-              "$ref": "#/definitions/UpdateRoomStatus"
+              "type": "string"
             }
           }
         ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateRoomStatus"
+              }
+            }
+          },
+          "description": "Update room status",
+          "required": true
+        },
         "responses": {
           "default": {
             "description": "Successful operation"
@@ -350,102 +299,125 @@
       }
     }
   },
-  "securityDefinitions": {
-    "Bearer": {
-      "type": "apiKey",
-      "name": "Authorization",
-      "in": "header"
-    }
-  },
-  "definitions": {
-    "Login": {
-      "type": "object",
-      "properties": {
-        "email": {
-          "type": "string"
-        },
-        "password": {
-          "type": "string"
-        }
-      },
-      "xml": {
-        "name": "User"
-      }
-    },
-    "CreateUser": {
-      "type": "object",
-      "properties": {
-        "email": {
-          "type": "string"
-        },
-        "name": {
-          "type": "string"
-        },
-        "registrationType": {
-          "type": "string"
-        },
-        "phoneNumber": {
-          "type": "integer"
-        },
-        "password": {
-          "type": "string"
-        }
-      },
-      "xml": {
-        "name": "User"
-      }
-    },
-    "CreatePosts": {
-      "type": "object",
-      "properties": {
-        "title": {
-          "type": "string"
-        },
-        "postbio": {
-          "type": "string"
-        },
-        "restaurantNumber": {
-          "type": "integer"
-        }
-      },
-      "xml": {
-        "name": "User"
-      }
-    },
-    "UpdateRoomStatus": {
-      "type": "object",
-      "properties": {
-        "availableRoomCount": {
-          "type": "integer"
-        },
-        "roomDetail": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/RoomDetails"
-          }
-        }
-      },
-      "xml": {
-        "name": "User"
-      }
-    },
-    "RoomDetails": {
-      "type": "object",
-      "properties": {
-        "roomNumber": {
-          "type": "integer"
-        },
-        "allottedUser": {
-          "type": "string"
-        }
-      },
-      "xml": {
-        "name": "User"
-      }
-    }
-  },
   "externalDocs": {
     "description": "Find out more about Swagger",
     "url": "http://swagger.io"
+  },
+  "servers": [
+    {
+      "url": "https://india-hotels-backend.herokuapp.com/v1"
+    },
+    {
+      "url": "http://localhost:8080/v1"
+    }
+  ],
+  "components": {
+    "requestBodies": {
+      "CreatePosts": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/CreatePosts"
+            }
+          }
+        },
+        "description": "Create new user record",
+        "required": true
+      }
+    },
+    "securitySchemes": {
+      "Bearer": {
+        "type": "apiKey",
+        "name": "Authorization",
+        "in": "header"
+      }
+    },
+    "schemas": {
+      "Login": {
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string"
+          },
+          "password": {
+            "type": "string"
+          }
+        },
+        "xml": {
+          "name": "User"
+        }
+      },
+      "CreateUser": {
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "registrationType": {
+            "type": "string"
+          },
+          "phoneNumber": {
+            "type": "integer"
+          },
+          "password": {
+            "type": "string"
+          }
+        },
+        "xml": {
+          "name": "User"
+        }
+      },
+      "CreatePosts": {
+        "type": "object",
+        "properties": {
+          "title": {
+            "type": "string"
+          },
+          "postbio": {
+            "type": "string"
+          },
+          "restaurantNumber": {
+            "type": "integer"
+          }
+        },
+        "xml": {
+          "name": "User"
+        }
+      },
+      "UpdateRoomStatus": {
+        "type": "object",
+        "properties": {
+          "availableRoomCount": {
+            "type": "integer"
+          },
+          "roomDetail": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/RoomDetails"
+            }
+          }
+        },
+        "xml": {
+          "name": "User"
+        }
+      },
+      "RoomDetails": {
+        "type": "object",
+        "properties": {
+          "roomNumber": {
+            "type": "integer"
+          },
+          "allottedUser": {
+            "type": "string"
+          }
+        },
+        "xml": {
+          "name": "User"
+        }
+      }
+    }
   }
 }

@@ -3,7 +3,7 @@ const bodyParser = require('body-parser');
 const cors = require('cors');
 const swaggerUI = require('swagger-ui-express');
 const path = require("path");
-const swaggerDocument = require('./swagger.json');
+const swaggerDocument = require("./openapi.json");
 
 require("dotenv").config({ path: "./env/.env" });
 
