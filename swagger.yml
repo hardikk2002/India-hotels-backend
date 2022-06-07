@@ -1,0 +1,317 @@
+swagger: "2.0"
+info:
+  description: "This is IndianHotels API documentation using [Swagger](http://swagger.io)."
+  version: "1.0.0"
+  title: "Indian Hotels"
+  # termsOfService: "http://swagger.io/terms/"
+  contact:
+    email: "hardikk2002@gmail.com"
+  license:
+    name: "Apache 2.0"
+    url: "http://www.apache.org/licenses/LICENSE-2.0.html"
+    
+host: "localhost:8080"
+basePath: "/v1"
+
+tags:
+- name: "User"
+  description: "Everything about your users"
+- name: "Posts"
+  description: "Everything about posts"
+- name: "Rooms"
+  description: "Everything about rooms"
+  
+schemes:
+- "https"
+- "http"
+
+paths:
+  /auth/login:
+    post:
+      tags:
+      - "User"
+      summary: "Create login"
+      description: ""
+      operationId: "loginuser"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "Login inputs"
+        required: true
+        schema:
+          $ref: "#/definitions/Login"
+      responses:
+        default:
+          description: "Successfil operation"
+          
+  /user/register:
+    post:
+      tags:
+      - "User"
+      summary: "Create login"
+      description: ""
+      operationId: "createuser"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "Create new user record"
+        required: true
+        schema:
+          $ref: "#/definitions/CreateUser"
+      responses:
+        default:
+          description: "Successfil operation"
+          
+  /user:
+    get:
+      security:
+        - Bearer: []
+      tags:
+      - "User"
+      summary: "Get user details"
+      description: "Accessible by users having access toke"
+      operationId: "getuser"
+      produces:
+      - "application/json"
+      responses:
+        default:
+          description: "Successfil operation"
+          
+  /hotel:
+    get:
+      tags:
+      - "Posts"
+      summary: "Get hotel details"
+      description: ""
+      operationId: "gethotels"
+      produces:
+      - "application/json"
+      responses:
+        default:
+          description: "Successfil operation"
+          
+  /hotel/create:
+    post:
+      tags:
+      - "Posts"
+      summary: "Create posts"
+      description: ""
+      operationId: "createposts"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "Create new user record"
+        required: true
+        schema:
+          $ref: "#/definitions/CreatePosts"
+      responses:
+        default:
+          description: "Successfil operation"
+          
+  /hotel/{id}:
+    put:
+      tags:
+      - "Posts"
+      summary: "Update posts"
+      description: ""
+      operationId: "updatepost"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "path"
+        name: "id"
+        description: "Post ID"
+        required: true
+        type: "string"
+      - in: "body"
+        name: "body"
+        description: "Create new user record"
+        required: true
+        schema:
+          $ref: "#/definitions/CreatePosts"
+      responses:
+        default:
+          description: "Successful operation"
+    delete:
+      tags:
+      - "Posts"
+      summary: "Delete posts"
+      description: ""
+      operationId: "deletepost"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "path"
+        name: "id"
+        description: "Post ID"
+        required: true
+        type: "string"
+      responses:
+        default:
+          description: "Successful operation"
+          
+  /hotel/upvote/{id}:
+    patch:
+      security:
+        - Bearer: []
+      tags:
+      - "Posts"
+      summary: "Update posts"
+      description: ""
+      operationId: "upvoteposts"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "path"
+        name: "id"
+        description: "Post ID"
+        required: true
+        type: "string"
+      responses:
+        default:
+          description: "Successful operation"
+          
+  /hotel/{id}/rooms:
+    get:
+      security:
+        - Bearer: []
+      tags:
+      - "Rooms"
+      summary: "Get rooms in a hotel"
+      description: ""
+      operationId: "Get Rooms"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "path"
+        name: "id"
+        description: "Post ID"
+        required: true
+        type: "string"
+      responses:
+        default:
+          description: "Successful operation"
+
+  /hotel/{id}/rooms/{status}:
+    put:
+      security:
+        - Bearer: []
+      tags:
+      - "Rooms"
+      summary: "Update room status"
+      description: ""
+      operationId: "updateroom"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "path"
+        name: "id"
+        description: "Post ID"
+        required: true
+        type: "string"
+      - in: "path"
+        name: "status"
+        description: "Booking status"
+        required: true
+        type: "string"
+      - in: "body"
+        name: "body"
+        description: "Update room status"
+        required: true
+        schema:
+          $ref: "#/definitions/UpdateRoomStatus"
+      responses:
+        default:
+          description: "Successful operation"
+
+securityDefinitions:
+  Bearer:
+    type: "apiKey"
+    name: "Authorization"
+    in: "header"
+    
+definitions:
+  Login:
+    type: "object"
+    properties:
+      email:
+        type: "string"
+      password:
+        type: "string"
+    xml:
+      name: "User"
+      
+  CreateUser:
+    type: "object"
+    properties:
+      email:
+        type: "string"
+      name:
+        type: "string"
+      registrationType: 
+        type: "string"
+      phoneNumber: 
+        type: "integer"
+      password:
+        type: "string"
+    xml:
+      name: "User"
+      
+  CreatePosts:
+    type: "object"
+    properties:
+      title:
+        type: "string"
+      postbio:
+        type: "string"
+      restaurantNumber: 
+        type: "integer"
+    xml:
+      name: "User"
+  
+  UpdateRoomStatus:
+    type: "object"
+    properties:
+      availableRoomCount:
+        type: "integer"
+      roomDetail:
+        type: "array"
+        items:
+          $ref: "#/definitions/RoomDetails"
+
+    xml:
+      name: "User"
+      
+  RoomDetails:
+    type: "object"
+    properties:
+      roomNumber:
+        type: "integer"
+      allottedUser:
+        type: "string"
+    xml:
+      name: "User"
+
+externalDocs:
+  description: "Find out more about Swagger"
+  url: "http://swagger.io"
+  
+  
+  
+  
