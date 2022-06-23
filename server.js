@@ -11,9 +11,12 @@ const PORT = process.env.PORT || 4000;
 
 const app = express();
 
-// cors
+// cors;
 app.use(function (req, res, next) {
-  res.header("Access-Control-Allow-Origin", "*");
+  res.header(
+    "Access-Control-Allow-Origin",
+    "https://india-hotels-backend.herokuapp.com/"
+  );
   res.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE");
   res.header(
     "Access-Control-Allow-Headers",
